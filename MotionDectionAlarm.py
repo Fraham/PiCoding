@@ -42,7 +42,7 @@ try:
 			# Flash lights and sound buzzer
 			for x in range(0,3):
 			
-				GPIO.output(PinBuzzer,	GPIO.HIGH)
+				#GPIO.output(PinBuzzer,	GPIO.HIGH)
 				GPIO.output(PinRedLED,	GPIO.HIGH)
 				time.sleep(0.5)
 				
@@ -51,7 +51,7 @@ try:
 				time.sleep(0.5)
 				
 				GPIO.output(PinBlueLED,	GPIO.LOW)
-				GPIO.output(PinBuzzer,	GPIO.LOW)
+				#GPIO.output(PinBuzzer,	GPIO.LOW)
 				time.sleep(0.5)
 				
 				# Record previous state
