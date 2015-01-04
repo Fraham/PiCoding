@@ -40,19 +40,19 @@ try:
 			# PIR is triggered
 			print " Motion detected!"
 			# Flash lights and sound buzzer
-			for x in range(0,3):
+			for x in range(0, 20):
 			
 				#GPIO.output(PinBuzzer,	GPIO.HIGH)
 				GPIO.output(PinRedLED,	GPIO.HIGH)
-				time.sleep(0.5)
+				time.sleep(0.1)
 				
 				GPIO.output(PinRedLED,	GPIO.LOW)
 				GPIO.output(PinBlueLED,	GPIO.HIGH)
-				time.sleep(0.5)
+				time.sleep(0.1)
 				
 				GPIO.output(PinBlueLED,	GPIO.LOW)
 				#GPIO.output(PinBuzzer,	GPIO.LOW)
-				time.sleep(0.5)
+				time.sleep(0.1)
 				
 				# Record previous state
 				Previous_State=1
