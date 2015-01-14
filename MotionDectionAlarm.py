@@ -15,22 +15,22 @@ print "PIR Module Test (CTRL-C to exit)"
 
 # Set pins as input/output
 
-GPIO.setup(PinPIR,GPIO.IN)
-GPIO.setup(PinRedLED,GPIO.OUT)
-GPIO.setup(PinBlueLED,GPIO.OUT)
-GPIO.setup(PinBuzzer,GPIO.OUT)
+GPIO.setup(PinPIR, GPIO.IN)
+GPIO.setup(PinRedLED, GPIO.OUT)
+GPIO.setup(PinBlueLED, GPIO.OUT)
+GPIO.setup(PinBuzzer, GPIO.OUT)
 
 # Variables to hold the current and last states
 Current_State = 0
 Previous_State = 0
 
 try:
-	print "Waiting for PIR to settle ..."
+	print "Waiting for no detection."
 	# Loop until PIR output is 0
 	while GPIO.input(PinPIR) == 1:
 		Current_State = 0
 
-	print "Ready"
+	print "Ready, starting alarm"
 	# Loop until users quits with CTRL - C
 	while True :
 		# Read PIR state
@@ -59,12 +59,15 @@ try:
 
 		elif Current_State==0 and Previous_State==1:
 			# PIR has returned to ready state
-			print " Ready"
+			print "Ready, starting alarm"
 			Previous_State=0
 
 		# Wait for 10 milliseconds
 		time.sleep(0.01)
+
 except KeyboardInterrupt:
-	print " Quit"
+	print "Quit, closing down"
 	# Reset GPIO settings
 	GPIO.cleanup()
+
+	print "Goodbye"
