@@ -1,7 +1,7 @@
 import time
 from ISStreamer.Streamer import Streamer
-
-key = raw_input('Enter the key')
+print('Enter the key')
+key = raw_input()
 
 logger = Streamer(bucket="Stream Example", client_key=key)
 
