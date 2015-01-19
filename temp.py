@@ -35,4 +35,4 @@ def read_temp():
 while True:
     temp =read_temp()
     logger.log("University Room (C)", temp)
-    time.sleep(0.5)
+    time.sleep(60)
