@@ -1,18 +1,17 @@
 import os
 import glob
 import time
-from ISStreamer.Streamer import Streamer
-
-print('Enter the key')
-key = raw_input()
-
-logger = Streamer(bucket="Temperature Stream", client_key=key)
+import MySQLdb
 
 os.system('modprobe w1-gpio')
 os.system('modprobe w1-therm')
 base_dir = '/sys/bus/w1/devices/'
 device_folder = glob.glob(base_dir + '28*')[0]
 device_file = device_folder + '/w1_slave'
+
+db = MySQLdb.connect(host="easyLiving.ml", user="root",passwd="cheeseBurger", db="easyliving")
+cur = db.cursor()
+
 def read_temp_raw():
     f = open(device_file, 'r')
     lines = f.readlines()
@@ -33,6 +32,9 @@ def read_temp():
         return temp_c
 
 while True:
-    temp =read_temp()
-    logger.log("University Room (C)", temp)
-    time.sleep(60)
+    temp = read_temp()
+    sql = ("""INSERT INTO temphum (temp) VALUES (%s)""",(temp))
+    cur.execute(*sql)
+    db.commit()
+
+    time.sleep(600)
