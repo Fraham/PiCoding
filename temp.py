@@ -33,7 +33,7 @@ def read_temp():
 
 while True:
     temp = read_temp()
-    sql = ("""INSERT INTO temphum (temp) VALUES (%s)""",(temp))
+    sql = ("""INSERT INTO temphum (senorID, temp) VALUES (%s, %s)""",("030003", temp))
     cur.execute(*sql)
     db.commit()
 
