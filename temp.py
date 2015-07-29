@@ -32,9 +32,12 @@ def read_temp():
         return temp_c
 
 while True:
-    temp = read_temp()
-    sql = ("""INSERT INTO temphum (sensorID, temp) VALUES (%s, %s)""",("030003", temp))
-    cur.execute(*sql)
-    db.commit()
-
-    time.sleep(600)
+    try:
+        temp = read_temp()
+        sql = ("""INSERT INTO temphum (sensorID, temp) VALUES (%s, %s)""",("030003", temp))
+        cur.execute(*sql)
+        db.commit()
+    except:
+        print "error"
+    finally:
+        time.sleep(600)
