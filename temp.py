@@ -9,8 +9,8 @@ base_dir = '/sys/bus/w1/devices/'
 device_folder = glob.glob(base_dir + '28*')[0]
 device_file = device_folder + '/w1_slave'
 
-db
-cur
+db = MySQLdb.connect(host="easyLiving.ml", user="root",passwd="cheeseBurger", db="easyliving")
+cur = db.cursor()
 
 def startUp():
     db = MySQLdb.connect(host="easyLiving.ml", user="root",passwd="cheeseBurger", db="easyliving")
