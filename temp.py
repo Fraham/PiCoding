@@ -3,14 +3,15 @@ import glob
 import time
 import MySQLdb
 
-os.system('modprobe w1-gpio')
-os.system('modprobe w1-therm')
-base_dir = '/sys/bus/w1/devices/'
-device_folder = glob.glob(base_dir + '28*')[0]
-device_file = device_folder + '/w1_slave'
+def startUp():
+    os.system('modprobe w1-gpio')
+    os.system('modprobe w1-therm')
+    base_dir = '/sys/bus/w1/devices/'
+    device_folder = glob.glob(base_dir + '28*')[0]
+    device_file = device_folder + '/w1_slave'
 
-db = MySQLdb.connect(host="easyLiving.ml", user="root",passwd="cheeseBurger", db="easyliving")
-cur = db.cursor()
+    db = MySQLdb.connect(host="easyLiving.ml", user="root",passwd="cheeseBurger", db="easyliving")
+    cur = db.cursor()
 
 def read_temp_raw():
     f = open(device_file, 'r')
@@ -33,10 +34,18 @@ def read_temp():
 
 while True:
     try:
-        temp = read_temp()
-        sql = ("""INSERT INTO temphum (sensorID, temp) VALUES (%s, %s)""",("030003", temp))
-        cur.execute(*sql)
-        db.commit()
-    except Exception as e: print(e)
-    finally:
-        time.sleep(600)
+        startUp()
+
+        while True:
+            try:
+                temp = read_temp()
+                sql = ("""INSERT INTO temphum (sensorID, temp) VALUES (%s, %s)""",("030003", temp))
+                cur.execute(*sql)
+                db.commit()
+            except Exception as e: print(e)
+            finally:
+                time.sleep(600)
+    except:
+        Exception as e: print(e)
+        time.sleep(300)
+
