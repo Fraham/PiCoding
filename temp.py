@@ -46,6 +46,5 @@ while True:
             finally:
                 time.sleep(600)
     except:
-        Exception as e: print(e)
         time.sleep(300)
 
