@@ -45,7 +45,8 @@ while True:
                 sql = ("""INSERT INTO temphum (sensorID, temp) VALUES (%s, %s)""",("030003", temp))
                 cur.execute(*sql)
                 db.commit()
-            except Exception as e: print(e)
+            except:
+                break
             finally:
                 time.sleep(600)
     except:
