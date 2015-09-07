@@ -43,6 +43,7 @@ while True:
             print "Error %d: %s" % (e.args[0], e.args[1])
 
         time.sleep(600)
-    except:
-        print "Unexpected error:", sys.exc_info()[0]
+    except Exception,e: print str(e)
+
+
 
