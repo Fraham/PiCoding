@@ -44,5 +44,5 @@ while True:
 
         time.sleep(600)
     except:
-        time.sleep(300)
+        print "Unexpected error:", sys.exc_info()[0]
 
