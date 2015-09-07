@@ -9,13 +9,6 @@ base_dir = '/sys/bus/w1/devices/'
 device_folder = glob.glob(base_dir + '28*')[0]
 device_file = device_folder + '/w1_slave'
 
-db = MySQLdb.connect(host="easyLiving.ml", user="root",passwd="cheeseBurger", db="easyliving")
-cur = db.cursor()
-
-def startUp():
-    db = MySQLdb.connect(host="easyLiving.ml", user="root",passwd="cheeseBurger", db="easyliving")
-    cur = db.cursor()
-
 def read_temp_raw():
     f = open(device_file, 'r')
     lines = f.readlines()
@@ -37,19 +30,19 @@ def read_temp():
 
 while True:
     try:
-        startUp()
+        db = MySQLdb.connect(host="easyLiving.ml", user="root",passwd="cheeseBurger", db="easyliving")
+        cur = db.cursor()
 
-        while True:
-            try:
-                temp = read_temp()
-                sql = ("""INSERT INTO temphum (sensorID, temp) VALUES (%s, %s)""",("030003", temp))
-                cur.execute(*sql)
-                db.commit()
-                print temp
-            except:
-                break
-            finally:
-                time.sleep(600)
+        try:
+            temp = read_temp()
+            sql = ("""INSERT INTO temphum (sensorID, temp) VALUES (%s, %s)""",("030003", temp))
+            cur.execute(*sql)
+            db.commit()
+            print temp
+        except MySQLdb.Error, e:
+            print "Error %d: %s" % (e.args[0], e.args[1])
+
+        time.sleep(600)
     except:
         time.sleep(300)
 
